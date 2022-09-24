@@ -21,10 +21,10 @@ import com.juxtapose.example.ch04.stop.StopStepListener;
 public class JobLaunchStopBusiness {
 	
 	/**
-	 * 执行批处理作业.<br>
-	 * @param jobPath	作业配置文件
-	 * @param jobName	作业名
-	 * @param builder	作业参数构造器
+	 * 일괄 처리 작업을 수행하세요. <br>
+	 * @param jobPath	작업 설정 파일
+	 * @param jobName	작업명
+	 * @param builder	작업 매개 변수 생성자
 	 */
 	public static void executeJobAndStop(String jobPath, String jobName, JobParametersBuilder builder) {
 		ApplicationContext context = new ClassPathXmlApplicationContext(jobPath);

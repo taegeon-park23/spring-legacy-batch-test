@@ -20,13 +20,13 @@
     http://www.springframework.org/schema/task 
     http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 	
-	<!-- 作业仓库 -->
+	<!-- jobRepository -->
 	<job-repository id="jobRepository" data-source="dataSource"
 	    transaction-manager="transactionManager" isolation-level-for-create="SERIALIZABLE"
 	    table-prefix="BATCH_" max-varchar-length="1000"
 	/>
 	
-	<!-- 作业调度器 -->
+	<!-- jobLauncher -->
 	<bean:bean id="jobLauncher" 
 		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
 		<bean:property name="jobRepository" ref="jobRepository"/>
@@ -39,12 +39,12 @@
 	<bean:bean id="jobRegistry"
       class="org.springframework.batch.core.configuration.support.MapJobRegistry" />
 	
-	<!-- 事务管理器 -->
+	<!-- transactionManager -->
 	<bean:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<bean:property name="dataSource" ref="dataSource" />
 	</bean:bean>
 	
-	<!-- 数据源 -->
+	<!-- dataSource -->
     <bean:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
   		<bean:property name="driverClassName">
    			<bean:value>com.mysql.jdbc.Driver</bean:value>
@@ -53,6 +53,6 @@
    			<bean:value>jdbc:mysql://127.0.0.1:3306/test1289</bean:value>
   		</bean:property>
   		<bean:property name="username" value="root"></bean:property>
-  		<bean:property name="password" value="000000"></bean:property>
+  		<bean:property name="password" value=""></bean:property>
  	</bean:bean>
 </bean:beans>

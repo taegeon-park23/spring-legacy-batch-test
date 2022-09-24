@@ -46,6 +46,6 @@
    			<bean:value>jdbc:mysql://127.0.0.1:3306/test1289</bean:value>
   		</bean:property>
   		<bean:property name="username" value="root"></bean:property>
-  		<bean:property name="password" value="000000"></bean:property>
+  		<bean:property name="password" value=""></bean:property>
  	</bean:bean>
 </bean:beans>

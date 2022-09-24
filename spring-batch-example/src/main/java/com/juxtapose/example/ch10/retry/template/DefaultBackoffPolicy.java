@@ -3,7 +3,7 @@
  */
 package com.juxtapose.example.ch10.retry.template;
 
-import org.junit.Assert;
+// import org.junit.Assert;
 import org.springframework.retry.RetryContext;
 import org.springframework.retry.backoff.BackOffContext;
 import org.springframework.retry.backoff.BackOffInterruptedException;
@@ -29,7 +29,7 @@ public class DefaultBackoffPolicy implements BackOffPolicy {
 	 */
 	public void backOff(BackOffContext backOffContext)
 			throws BackOffInterruptedException {
-		Assert.assertNotNull(((BackOffContextImpl)backOffContext).getRetryContext().getAttribute("count"));
+		// Assert.assertNotNull(((BackOffContextImpl)backOffContext).getRetryContext().getAttribute("count"));
 		CountHelper.decrement();
 	}
 

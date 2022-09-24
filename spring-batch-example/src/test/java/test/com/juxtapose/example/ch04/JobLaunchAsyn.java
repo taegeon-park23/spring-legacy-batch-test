@@ -20,10 +20,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class JobLaunchAsyn {
 	
 	/**
-	 * 执行批处理作业.<br>
-	 * @param jobPath	作业配置文件
-	 * @param jobName	作业名
-	 * @param builder	作业参数构造器
+	 * 일괄 처리 작업 실행.<br>
+	 * @param jobPath	작업 프로파일
+	 * @param jobName	운영명
+	 * @param builder	작업 매개 변수 생성자
 	 */
 	public static void executeJob(String jobPath, String jobName, JobParametersBuilder builder) {
 		ApplicationContext context = new ClassPathXmlApplicationContext(jobPath);

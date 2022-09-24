@@ -31,7 +31,7 @@ public class HelloWorldTasklet implements Tasklet {
 	}
 	
 	/**
-	 * 转换为String类型格式.<br>
+	 * String 형식으로 변환. <br>
 	 * @param jobParameters
 	 * @return
 	 */

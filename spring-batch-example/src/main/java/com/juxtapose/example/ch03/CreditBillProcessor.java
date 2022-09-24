@@ -6,8 +6,7 @@ package com.juxtapose.example.ch03;
 import org.springframework.batch.item.ItemProcessor;
 
 /**
- * @author bruce.liu(mailto:jxta.liu@gmail.com)
- * 2013-1-6下午09:55:38
+ * @author taegeon-park23(justerror23@gmail.com)
  */
 public class CreditBillProcessor implements
 		ItemProcessor<CreditBill, CreditBill> {

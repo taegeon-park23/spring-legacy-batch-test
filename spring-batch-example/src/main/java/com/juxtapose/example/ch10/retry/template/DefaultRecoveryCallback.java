@@ -3,7 +3,7 @@
  */
 package com.juxtapose.example.ch10.retry.template;
 
-import org.junit.Assert;
+// import org.junit.Assert;
 import org.springframework.retry.RecoveryCallback;
 import org.springframework.retry.RetryContext;
 
@@ -16,7 +16,7 @@ import org.springframework.retry.RetryContext;
 public class DefaultRecoveryCallback<T> implements RecoveryCallback<T> {
 
 	public T recover(RetryContext context) throws Exception {
-		Assert.assertNotNull(context.getAttribute("count"));
+		// Assert.assertNotNull(context.getAttribute("count"));
 		CountHelper.decrement();
 		return null;
 	}

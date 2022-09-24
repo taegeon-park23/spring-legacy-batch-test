@@ -18,7 +18,7 @@
     http://www.springframework.org/schema/batch/spring-batch-2.2.xsd">
     <bean:import resource="classpath:ch04/job-context.xml"/>
     
-    <!-- 账单作业 -->
+    <!-- 계산서 작업 -->
     <job id="billJob">
         <step id="billStep">
             <tasklet transaction-manager="transactionManager">
@@ -29,7 +29,7 @@
         </step>
     </job>
     
-    <!-- 读取信用卡账单文件,CSV格式 -->
+    <!-- 신용카드 청구서 파일 읽기, CSV 형식 -->
     <bean:bean id="csvItemReader"
         class="org.springframework.batch.item.file.FlatFileItemReader" 
         scope="step">
@@ -64,7 +64,7 @@
         </bean:property>
     </bean:bean>
     
-    <!-- 写信用卡账单文件，CSV格式 -->
+    <!-- 신용카드 청구서 서류 작성, CSV 양식 -->
     <bean:bean id="csvItemWriter" 
         class="org.springframework.batch.item.file.FlatFileItemWriter" 
         scope="step">

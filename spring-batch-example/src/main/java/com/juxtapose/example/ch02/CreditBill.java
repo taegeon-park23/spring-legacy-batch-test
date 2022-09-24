@@ -4,16 +4,15 @@
 package com.juxtapose.example.ch02;
 
 /**
- * 信用卡对账单模型.<br>
- * @author bruce.liu(mailto:jxta.liu@gmail.com)
- * 2013-1-6下午09:56:02
+ * 신용카드 청구서 모형.<br>
+ * @author taegepn-park23(justerror23@gmail.com)
  */
 public class CreditBill {
-	private String accountID = "";	/** 银行卡账户ID */
-	private String name = "";		/** 持卡人姓名 */
-	private double amount = 0;		/** 消费金额 */
-	private String date;			/** 消费日期 ，格式YYYY-MM-DD HH:MM:SS*/
-	private String address;			/** 消费场所 **/
+	private String accountID = "";	/** 카드계좌 ID */
+	private String name = "";		/** 카드소지자 이름 */
+	private double amount = 0;		/** 카드소지 금액 */
+	private String date;			/** 소비일자，형식 YYYY-MM-DD HH:MM:SS*/
+	private String address;			/** 소비장소 **/
 	
 	public String getAccountID() {
 		return accountID;

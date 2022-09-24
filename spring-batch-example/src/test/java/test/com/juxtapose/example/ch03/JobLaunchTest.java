@@ -3,34 +3,29 @@ package test.com.juxtapose.example.ch03;
 
 import java.util.Date;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={
-"/ch03/job/job.xml"
-})
 public class JobLaunchTest {
-	@Autowired
 	private JobLauncher jobLauncher;
-	@Autowired@Qualifier("billJob")
 	private Job job;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
+		ApplicationContext context = new ClassPathXmlApplicationContext(
+				"ch03/job/job.xml");
+		jobLauncher = (JobLauncher) context.getBean("jobLauncher");
+		job = (Job) context.getBean("billJob");
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 	}
 	

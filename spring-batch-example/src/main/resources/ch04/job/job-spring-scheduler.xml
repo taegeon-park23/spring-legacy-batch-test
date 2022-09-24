@@ -23,7 +23,7 @@
     
 	<task:scheduler id="scheduler" pool-size="10" />
 	
-	<!-- 每一秒钟，执行对象schedulerLauncher的launch方法一次 -->	
+	<!-- 매 초마다 객체 스케일러 런처의 런처 방법을 수행한다 -->	
 	<task:scheduled-tasks scheduler="scheduler">
 		<task:scheduled ref="schedulerLauncher" method="launch" fixed-rate="1000" />
 	</task:scheduled-tasks>
