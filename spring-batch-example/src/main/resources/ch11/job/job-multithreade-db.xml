@@ -27,9 +27,19 @@
         <step id="dbErrorStep">
             <tasklet task-executor="taskExecutor" throttle-limit="6">
                 <chunk reader="jdbcItemReader" processor="creditBillProcessor" 
-                    writer="jdbcSetterItemWriter" commit-interval="2">
+                    writer="jdbcSetterItemWriter" commit-interval="1">
                 </chunk>
             </tasklet>
+            <next on="FAILED" to="failBillInsertLogStep" />
+            <next on="COMPLETED" to="successStep" />
+        </step>
+
+        <step id="failBillInsertLogStep">
+            <tasklet ref="failBillInsertLogTasklet" />
+        </step>
+
+        <step id="successStep">
+            <tasklet ref="successTasklet" />
         </step>
     </job>
     
@@ -37,9 +47,19 @@
         <step id="dbSynchronizedStep">
             <tasklet task-executor="taskExecutor" throttle-limit="6">
                 <chunk reader="creditBillItemReader" processor="creditBillProcessor" 
-                    writer="jdbcSetterItemWriter" commit-interval="2">
+                    writer="jdbcSetterItemWriter" commit-interval="1">
                 </chunk>
             </tasklet>
+            <next on="FAILED" to="failBillInsertLogStep2" />
+            <next on="COMPLETED" to="successStep2" />
+        </step>
+
+        <step id="failBillInsertLogStep2">
+            <tasklet ref="failBillInsertLogTasklet" />
+        </step>
+
+        <step id="successStep2">
+            <tasklet ref="successTasklet" />
         </step>
     </job>
     
@@ -47,7 +67,7 @@
         <step id="dbRestartSynchronizedStep">
             <tasklet task-executor="taskExecutor" throttle-limit="6">
                 <chunk reader="creditBillRestartItemReader" processor="creditBillRestartProcessor" 
-                    writer="jdbcSetterItemWriter" commit-interval="2">
+                    writer="jdbcSetterItemWriter" commit-interval="1">
                 </chunk>
             </tasklet>
         </step>
@@ -71,6 +91,20 @@
         class="com.juxtapose.example.ch11.multithread.SynchronizedItemReader">
 		<bean:property name="delegate" ref="jdbcRestartItemReader" />
 	</bean:bean>
+
+    <bean:bean id="failBillInsertLogTasklet" scope="step"
+        class="com.juxtapose.example.ch11.tasklet.FailBillInesertLogTasklet">
+        <bean:property name="jdbcTemplate" ref="jdbcTemplate"></bean:property>
+        <bean:property name="dataShareBean" ref="dataShareBean"></bean:property>
+    </bean:bean>
+
+    <bean:bean id="successTasklet" scope="step"
+        class="com.juxtapose.example.ch11.tasklet.SuccessTasklet">
+    </bean:bean>
+
+    <bean:bean id="dataShareBean"
+        class="com.juxtapose.example.ch11.data.DataShareBean">
+    </bean:bean>
     
 	<!-- 读取db -->
     <bean:bean id="jdbcItemReader" scope="step"
@@ -104,6 +138,8 @@
     
     <bean:bean id="creditBillProcessor" scope="step"
         class="com.juxtapose.example.ch11.multithread.CreditBillProcessor">
+        <bean:property name="jdbcTemplate" ref="jdbcTemplate"></bean:property>
+        <bean:property name="dataShareBean" ref="dataShareBean"></bean:property>
     </bean:bean>
     
      <bean:bean id="creditBillRestartProcessor" scope="step"

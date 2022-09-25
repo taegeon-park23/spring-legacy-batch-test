@@ -17,8 +17,7 @@ public class SynchronizedItemReader implements ItemReader<CreditBill>, ItemStrea
 	private ItemReader<CreditBill> delegate;
 
 	public synchronized CreditBill read() throws Exception {
-		CreditBill creditBill = delegate.read();
-		return creditBill;
+		return delegate.read();
 	}
 
 	public ItemReader<CreditBill> getDelegate() {
