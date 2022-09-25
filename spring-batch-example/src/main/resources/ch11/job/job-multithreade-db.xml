@@ -45,27 +45,27 @@
     
     <job id="dbSynchronizedJob">
         <step id="dbSynchronizedStep">
-            <tasklet task-executor="taskExecutor" throttle-limit="6">
+            <tasklet task-executor="taskExecutor" throttle-limit="10">
                 <chunk reader="creditBillItemReader" processor="creditBillProcessor" 
-                    writer="jdbcSetterItemWriter" commit-interval="1">
+                    writer="jdbcSetterItemWriter" commit-interval="1" skip-limit="10">
+                    <skippable-exception-classes>
+				        <include class="java.lang.RuntimeException" />
+				    </skippable-exception-classes>
+				    <listeners>
+						<listener ref="failBillInsertLogListener"></listener>
+			  		</listeners>
                 </chunk>
             </tasklet>
-            <next on="FAILED" to="failBillInsertLogStep2" />
-            <next on="COMPLETED" to="successStep2" />
-        </step>
-
-        <step id="failBillInsertLogStep2">
-            <tasklet ref="failBillInsertLogTasklet" />
-        </step>
-
-        <step id="successStep2">
-            <tasklet ref="successTasklet" />
         </step>
     </job>
     
+    <bean:bean id="failBillInsertLogListener" class="com.juxtapose.example.ch11.listener.FailBillInsertLogListener">
+        <bean:property name="jdbcTemplate" ref="jdbcTemplate"></bean:property>
+    </bean:bean>
+
     <job id="dbRestartSynchronizedJob">
         <step id="dbRestartSynchronizedStep">
-            <tasklet task-executor="taskExecutor" throttle-limit="6">
+            <tasklet task-executor="taskExecutor" throttle-limit="10">
                 <chunk reader="creditBillRestartItemReader" processor="creditBillRestartProcessor" 
                     writer="jdbcSetterItemWriter" commit-interval="1">
                 </chunk>
@@ -149,7 +149,7 @@
     
     <bean:bean id="taskExecutor"
 		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-		<bean:property name="corePoolSize" value="5"/>
-		<bean:property name="maxPoolSize" value="15"/>
+		<bean:property name="corePoolSize" value="10"/>
+		<bean:property name="maxPoolSize" value="10"/>
 	</bean:bean>
 </bean:beans>

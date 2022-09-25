@@ -32,9 +32,14 @@ public class CreditBillProcessor implements
 		destCreditBill.setName(bill.getName());
 		if(null != jdbcTemplate){
 
+			if("03".equals(bill.getId())) {
+				dataShareBean.putData(bill);
+				throw new RuntimeException(bill.getId());
+			}
+
 			if("13".equals(bill.getId())) {
 				dataShareBean.putData(bill);
-				throw new RuntimeException();
+				throw new RuntimeException(bill.getId());
 			}
 
 			jdbcTemplate.update("update t_credit set flag=? where id=?", "true", bill.getId());
