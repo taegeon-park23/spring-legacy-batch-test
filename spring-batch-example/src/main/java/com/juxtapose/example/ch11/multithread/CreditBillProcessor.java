@@ -3,7 +3,9 @@
  */
 package com.juxtapose.example.ch11.multithread;
 
+import java.sql.SQLException;
 import java.util.UUID;
+import java.util.function.Function;
 
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -42,9 +44,47 @@ public class CreditBillProcessor implements
 				throw new RuntimeException(bill.getId());
 			}
 
-			jdbcTemplate.update("update t_credit set flag=? where id=?", "true", bill.getId());
+			initStep()
+				.andThen(step01())
+				.andThen(step02())
+				.andThen(step03())
+				.apply(bill);
+
 		}
+
 		return destCreditBill;
+	}
+
+	private String createUUID() {
+		return UUID.randomUUID().toString().substring(0, 7);
+	}
+
+	private Function<CreditBill, CreditBill> initStep() throws SQLException {
+		return (bill) -> {
+			return bill;
+		};
+	}
+
+	private Function<CreditBill, CreditBill> step01() throws SQLException {
+		return (bill) -> {
+			jdbcTemplate.update("INSERt INTO t_credit(`ID`,`ACCOUNTID`,`NAME`,`AMOUNT`,`DATE`,`ADDRESS`,`FLAG`) values (?,'ACCOUNTID','NAME',100.00,'DATE','ADDRESS','FLAG')", createUUID());
+			return bill;
+		};
+	}
+
+	private Function<CreditBill, CreditBill> step02() throws SQLException {
+		return (bill) -> {
+			jdbcTemplate.update("INSERt INTO t_credit(`ID`,`ACCOUNTID`,`NAME`,`AMOUNT`,`DATE`,`ADDRESS`,`FLAG`) values (?,'ACCOUNTID','NAME',100.00,'DATE','ADDRESS','FLAG')", createUUID());
+			return bill;
+		};
+	}
+
+	private Function<CreditBill, CreditBill> step03() throws SQLException {
+		throw new SQLException();
+		// return (bill) -> {
+		// 	jdbcTemplate.update("update t_credit set flag=? where id=?", "true", bill.getId());
+		// 	return bill;
+		// };
 	}
 
 	public JdbcTemplate getJdbcTemplate() {
